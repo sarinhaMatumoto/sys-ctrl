@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Locações - Dashboard Financeiro</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="img/Captura de tela 2025-11-01 014319.png" alt="Logo Sistema de Locações" class="logo-image">
+                <span class="logo-text">Sistema de Locações</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link active">LOCAÇÕES</a>
+                <a href="financeiro.html" class="nav-link">FINANCEIRO</a>
+                <a href="equipamentos.html" class="nav-link">EQUIPAMENTOS</a>
+            </div>
+            <button class="notification-btn" onclick="toggleNotifications()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <div class="notifications-panel" id="notificationsPanel">
+        <h3>NOVAS NOTIFICAÇÕES</h3>
+        <div class="notification-item">
+            <p>Falta 1 dia para o vencimento da locação ONKO</p>
+        </div>
+        <div class="notification-item">
+            <p>Falta 2 dias para o vencimento da locação DEZ EMERGÊNCIAS (2)</p>
+        </div>
+    </div>
+
+    <main class="container">
+        <div class="dashboard-header">
+            <h1>Dashboard Financeiro</h1>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Lucro bruto</h3>
+                <p class="stat-value">R$ 8.088,00</p>
+            </div>
+            <div class="stat-card">
+                <h3>Lucro líquido</h3>
+                <p class="stat-value">R$ 6.050,00</p>
+            </div>
+        </div>
+
+        <div class="chart-section">
+            <div class="chart-header">
+                <div class="chart-controls">
+                    <button class="chart-btn active" id="statusChartBtn" onclick="showChart('status')">STATUS</button>
+                    <button class="chart-btn" id="lucroChartBtn" onclick="showChart('lucro')">LUCRO MENSAL</button>
+                </div>
+            </div>
+            <div class="chart-container" id="statusChartContainer">
+                <div class="chart-wrapper">
+                    <canvas id="statusChart" width="300" height="300"></canvas>
+                </div>
+                <!-- Voltando para cores azuis e garantindo que os indicadores apareçam -->
+                <div class="chart-legend">
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #2563eb;"></span>
+                        <span>PAGO</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #3b82f6;"></span>
+                        <span>EM ATRASO</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #60a5fa;"></span>
+                        <span>PENDENTE</span>
+                    </div>
+                </div>
+            </div>
+            <div class="chart-container" id="lucroChartContainer" style="display: none;">
+                <div class="chart-wrapper">
+                    <canvas id="lucroChart" width="600" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="filters-section">
+            <input type="text" placeholder="Pesquisar empresa" class="filter-input" id="searchInput">
+            <select class="filter-select" id="statusFilter">
+                <option value="">Todos</option>
+                <option value="pago">Pago</option>
+                <option value="em-atraso">Em atraso</option>
+                <option value="pendente">Pendente</option>
+            </select>
+            <select class="filter-select" id="periodFilter">
+                <option value="">Selecione período</option>
+                <option value="mes">Este mês</option>
+                <option value="trimestre">Este trimestre</option>
+                <option value="ano">Este ano</option>
+            </select>
+        </div>
+
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Empresa</th>
+                        <th>ID Locação</th>
+                        <th>Valor</th>
+                        <th>Vencimento</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="rentalsTableBody">
+                    <tr>
+                        <td>DEZ EMERGÊNCIAS</td>
+                        <td>1</td>
+                        <td>R$ 670,00</td>
+                        <td>01</td>
+                        <td><span class="status-badge status-em-atraso">Em atraso</span></td>
+                        <td><button class="action-btn">Enviar um lembrete</button></td>
+                    </tr>
+                    <tr>
+                        <td>ASSOCIAÇÃO HOSPITAL CASA DE SAÚDE DE SANTOS</td>
+                        <td>2</td>
+                        <td>R$ 5.208,00</td>
+                        <td>08</td>
+                        <td><span class="status-badge status-pago">Pago</span></td>
+                        <td><button class="action-btn-secondary">Nenhuma ação</button></td>
+                    </tr>
+                    <tr>
+                        <td>SANTA CASA VALINHOS</td>
+                        <td>3</td>
+                        <td>R$ 1.800,00</td>
+                        <td>09</td>
+                        <td><span class="status-badge status-pago">Pago</span></td>
+                        <td><button class="action-btn-secondary">Nenhuma ação</button></td>
+                    </tr>
+                    <tr>
+                        <td>ONKO</td>
+                        <td>4</td>
+                        <td>R$ 652,00</td>
+                        <td>15</td>
+                        <td><span class="status-badge status-pendente">Pendente</span></td>
+                        <td><button class="action-btn-warning">Aguardar pagamento</button></td>
+                    </tr>
+                    <tr>
+                        <td>RADIOLOGIA ESPECIALIZADA</td>
+                        <td>5</td>
+                        <td>R$ 670,00</td>
+                        <td>FINALIZADA</td>
+                        <td><span class="status-badge status-pago">Pago</span></td>
+                        <td><button class="action-btn">Enviar um lembrete</button></td>
+                    </tr>
+                    <tr>
+                        <td>JOSUÉ LOLLI JUNIOR</td>
+                        <td>6</td>
+                        <td>R$ 1.600,00</td>
+                        <td>11</td>
+                        <td><span class="status-badge status-em-atraso">Em atraso</span></td>
+                        <td><button class="action-btn">Enviar um lembrete</button></td>
+                    </tr>
+                    <tr>
+                        <td>HOSPITAL 12 DE OUTUBRO</td>
+                        <td>7</td>
+                        <td>R$ 900,00</td>
+                        <td>21</td>
+                        <td><span class="status-badge status-pendente">Pendente</span></td>
+                        <td><button class="action-btn-warning">Aguardar pagamento</button></td>
+                    </tr>
+                    <tr>
+                        <td>DEZ EMERGÊNCIAS</td>
+                        <td>8</td>
+                        <td>R$ 19.020,00</td>
+                        <td>22</td>
+                        <td><span class="status-badge status-pago">Pago</span></td>
+                        <td><button class="action-btn-secondary">Nenhuma ação</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Locações - Equipamentos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <!-- Substituindo logo SVG pela nova logo com imagem -->
+            <div class="logo">
+                <img src="img/Captura de tela 2025-11-01 014319.png" alt="Logo Sistema de Locações" class="logo-image">
+                <span class="logo-text">Sistema de Locações</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">LOCAÇÕES</a>
+                <a href="financeiro.html" class="nav-link">FINANCEIRO</a>
+                <a href="equipamentos.html" class="nav-link active">EQUIPAMENTOS</a>
+            </div>
+            <button class="notification-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="page-header">
+            <h1>Gestão de Equipamentos</h1>
+            <button class="btn-primary" onclick="openEquipmentModal()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                Adicionar Equipamento
+            </button>
+        </div>
+
+        <div class="filters-section">
+            <button class="filter-btn">FILTRO</button>
+            <input type="text" placeholder="Pesquisar equipamento" class="filter-input" id="equipmentSearch">
+            <!-- Atualizando opções do filtro de status -->
+            <select class="filter-select" id="equipmentStatusFilter">
+                <option value="">STATUS</option>
+                <option value="disponivel">Disponível</option>
+                <option value="alocado">Alocado</option>
+                <option value="manutencao">Manutenção</option>
+            </select>
+            <button class="btn-secondary" onclick="sendRental()">Enviar Locação</button>
+        </div>
+
+        <!-- Adicionando coluna de Status na tabela -->
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Patrimônio</th>
+                        <th>Equipamento</th>
+                        <th>Status</th>
+                        <th>Data Vencimento</th>
+                        <th>Data do Certificado</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+                <tbody id="equipmentsTableBody">
+                    <tr>
+                        <td>01</td>
+                        <td>MM2040MM</td>
+                        <td>Monitor DX2020</td>
+                        <td><span class="status-badge status-disponivel">Disponível</span></td>
+                        <td>00/00/0000</td>
+                        <td>15/09/25 À 15/09/26</td>
+                        <td>R$ 604,50</td>
+                    </tr>
+                    <tr>
+                        <td>02</td>
+                        <td>MM2031MM</td>
+                        <td>Monitor DX2020</td>
+                        <td><span class="status-badge status-alocado">Alocado</span></td>
+                        <td>00/00/0000</td>
+                        <td>15/09/25 À 15/09/26</td>
+                        <td>R$ 604,50</td>
+                    </tr>
+                    <tr>
+                        <td>03</td>
+                        <td>EMR2002MM</td>
+                        <td>Carrinho Emergência</td>
+                        <td><span class="status-badge status-disponivel">Disponível</span></td>
+                        <td>00/00/0000</td>
+                        <td>15/09/25 À 15/09/26</td>
+                        <td>R$ 372,00</td>
+                    </tr>
+                    <tr>
+                        <td>04</td>
+                        <td>EMR2001MM</td>
+                        <td>Carrinho Emergência</td>
+                        <td><span class="status-badge status-manutencao">Manutenção</span></td>
+                        <td>00/00/0000</td>
+                        <td>15/09/25 À 15/09/26</td>
+                        <td>R$ 372,00</td>
+                    </tr>
+                    <tr>
+                        <td>05</td>
+                        <td>SUP2001MM</td>
+                        <td>Suporte de Soro</td>
+                        <td><span class="status-badge status-disponivel">Disponível</span></td>
+                        <td>00/00/0000</td>
+                        <td>N/A</td>
+                        <td>R$ 120,00</td>
+                    </tr>
+                    <tr>
+                        <td>06</td>
+                        <td>SUP2002MM</td>
+                        <td>Suporte de Soro</td>
+                        <td><span class="status-badge status-alocado">Alocado</span></td>
+                        <td>00/00/0000</td>
+                        <td>N/A</td>
+                        <td>R$ 120,00</td>
+                    </tr>
+                    <tr>
+                        <td>07</td>
+                        <td>SUP2003MM</td>
+                        <td>Suporte de Soro</td>
+                        <td><span class="status-badge status-disponivel">Disponível</span></td>
+                        <td>00/00/0000</td>
+                        <td>N/A</td>
+                        <td>R$ 120,00</td>
+                    </tr>
+                    <tr>
+                        <td>08</td>
+                        <td>SUP2004MM</td>
+                        <td>Suporte de Soro</td>
+                        <td><span class="status-badge status-disponivel">Disponível</span></td>
+                        <td>00/00/0000</td>
+                        <td>N/A</td>
+                        <td>R$ 120,00</td>
+                    </tr>
+                    <tr>
+                        <td>09</td>
+                        <td>SUP2005MM</td>
+                        <td>Suporte de Soro</td>
+                        <td><span class="status-badge status-manutencao">Manutenção</span></td>
+                        <td>00/00/0000</td>
+                        <td>N/A</td>
+                        <td>R$ 120,00</td>
+                    </tr>
+                    <tr>
+                        <td>010</td>
+                        <td>SUP2006MM</td>
+                        <td>Suporte de Soro</td>
+                        <td><span class="status-badge status-disponivel">Disponível</span></td>
+                        <td>00/00/0000</td>
+                        <td>N/A</td>
+                        <td>R$ 120,00</td>
+                    </tr>
+                    <tr>
+                        <td>011</td>
+                        <td>CAM2001MM</td>
+                        <td>Cama Hospitalar</td>
+                        <td><span class="status-badge status-alocado">Alocado</span></td>
+                        <td>00/00/0000</td>
+                        <td>15/09/25 À 15/09/26</td>
+                        <td>R$ 900,00</td>
+                    </tr>
+                    <tr>
+                        <td>012</td>
+                        <td>CAR2002MM</td>
+                        <td>Desfibrilador Cmos Drake</td>
+                        <td><span class="status-badge status-disponivel">Disponível</span></td>
+                        <td>00/00/0000</td>
+                        <td>15/09/25 À 15/09/26</td>
+                        <td>R$ 1.300,00</td>
+                    </tr>
+                    <tr>
+                        <td>013</td>
+                        <td>N/A</td>
+                        <td>Bota Mecânica Barrfap</td>
+                        <td><span class="status-badge status-disponivel">Disponível</span></td>
+                        <td>00/00/0000</td>
+                        <td>N/A</td>
+                        <td>R$ 1.800,00</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Modal de Equipamento -->
+    <div class="modal" id="equipmentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="btn-back" onclick="closeEquipmentModal()">VOLTAR</button>
+                <button class="btn-save" onclick="saveEquipment()">SALVAR</button>
+            </div>
+            <form class="equipment-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Nome</label>
+                        <input type="text" placeholder="CARRINHO DE EMERGÊNCIA" id="equipmentName">
+                    </div>
+                    <div class="form-group">
+                        <label>ID</label>
+                        <input type="text" placeholder="03" id="equipmentId">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>PATRIMÔNIO</label>
+                        <input type="text" id="equipmentPatrimony">
+                    </div>
+                    <!-- Adicionando campo de Status no formulário -->
+                    <div class="form-group">
+                        <label>STATUS</label>
+                        <select id="equipmentStatus">
+                            <option value="disponivel">Disponível</option>
+                            <option value="alocado">Alocado</option>
+                            <option value="manutencao">Manutenção</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>VENCIMENTO</label>
+                        <input type="date" id="equipmentExpiry">
+                    </div>
+                    <div class="form-group">
+                        <label>CERTIFICADO</label>
+                        <input type="text" id="equipmentCertificate">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>VALOR</label>
+                        <input type="text" placeholder="R$ 0,00" id="equipmentValue">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

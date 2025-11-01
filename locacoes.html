@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Locações - Gestão de Locações</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <!-- Substituindo logo SVG pela nova logo com imagem -->
+            <div class="logo">
+                <img src="img/Captura de tela 2025-11-01 014319.png" alt="Logo Sistema de Locações" class="logo-image">
+                <span class="logo-text">Sistema de Locações</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">LOCAÇÕES</a>
+                <a href="financeiro.html" class="nav-link">FINANCEIRO</a>
+                <a href="equipamentos.html" class="nav-link active">EQUIPAMENTOS</a>
+            </div>
+            <button class="notification-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="page-header">
+            <h1>Gestão de Locações</h1>
+            <button class="btn-primary" onclick="openModal('newRentalModal')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                Nova Locação
+            </button>
+        </div>
+
+        <div class="search-section">
+            <input type="text" placeholder="Pesquisar empresa" class="search-input" id="companySearch">
+        </div>
+
+        <div class="companies-grid">
+            <div class="company-list">
+                <div class="company-item active" onclick="selectCompany(1)">
+                    <div class="company-info">
+                        <span class="company-id">01</span>
+                        <span class="company-name">DEZ EMERGÊNCIAS</span>
+                    </div>
+                </div>
+                <div class="company-item" onclick="selectCompany(2)">
+                    <div class="company-info">
+                        <span class="company-id">02</span>
+                        <span class="company-name">ASSOCIAÇÃO HOSPITAL CASA DE SAÚDE DE SANTOS</span>
+                    </div>
+                </div>
+                <div class="company-item" onclick="selectCompany(3)">
+                    <div class="company-info">
+                        <span class="company-id">03</span>
+                        <span class="company-name">SANTA CASA VALINHOS</span>
+                    </div>
+                </div>
+                <div class="company-item" onclick="selectCompany(4)">
+                    <div class="company-info">
+                        <span class="company-id">04</span>
+                        <span class="company-name">ONKO</span>
+                    </div>
+                </div>
+                <div class="company-item" onclick="selectCompany(5)">
+                    <div class="company-info">
+                        <span class="company-id">05</span>
+                        <span class="company-name">RADIOLOGIA ESPECIALIZADA</span>
+                        <button class="delete-btn" onclick="deleteCompany(5)">DELETE</button>
+                    </div>
+                </div>
+                <div class="company-item" onclick="selectCompany(6)">
+                    <div class="company-info">
+                        <span class="company-id">06</span>
+                        <span class="company-name">JOSUÉ LOLLI JUNIOR</span>
+                    </div>
+                </div>
+                <div class="company-item" onclick="selectCompany(7)">
+                    <div class="company-info">
+                        <span class="company-id">07</span>
+                        <span class="company-name">DEZ EMERGÊNCIAS</span>
+                    </div>
+                </div>
+                <div class="company-item" onclick="selectCompany(8)">
+                    <div class="company-info">
+                        <span class="company-id">08</span>
+                        <span class="company-name">HOSPITAL 12 DE OUTUBRO</span>
+                    </div>
+                </div>
+                <button class="btn-add-company" onclick="openModal('newCompanyModal')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    NOVA LOCAÇÃO
+                </button>
+            </div>
+
+            <div class="company-details" id="companyDetails">
+                <div class="details-header">
+                    <div>
+                        <h2>Nome</h2>
+                        <p class="detail-value">RADIOLOGIA ESPECIALIZADA</p>
+                    </div>
+                    <div>
+                        <h2>Endereço</h2>
+                        <p class="detail-value">Rua das Flores, 345...</p>
+                    </div>
+                </div>
+
+                <div class="details-row">
+                    <div>
+                        <h3>Responsável pelo contrato</h3>
+                        <p class="detail-value">Marcos Augusto</p>
+                    </div>
+                    <div>
+                        <h3>Telefone para contato</h3>
+                        <p class="detail-value">11 99999-9999</p>
+                    </div>
+                </div>
+
+                <div class="details-row">
+                    <div>
+                        <h3>E-mail</h3>
+                        <p class="detail-value">marcosaugusto@radiologiaespecializada.com.br</p>
+                    </div>
+                    <div>
+                        <h3>Contrato</h3>
+                        <p class="detail-value">Duração de 6 meses</p>
+                    </div>
+                </div>
+
+                <div class="items-section">
+                    <h3>ITENS ALOCADOS</h3>
+                    <div class="items-list">
+                        <div class="item-row">
+                            <span>Desfibrilador</span>
+                            <span class="item-value">R$ 500,00</span>
+                        </div>
+                        <div class="item-row">
+                            <span>Fonte de alimentação</span>
+                            <span class="item-value">R$ 1.000,00</span>
+                        </div>
+                    </div>
+                    <div class="total-row">
+                        <span>Valor total da locação</span>
+                        <span class="total-value">R$ 1.500,00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
