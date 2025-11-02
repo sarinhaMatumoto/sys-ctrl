@@ -11,7 +11,7 @@
         <div class="nav-container">
             <!-- Substituindo logo SVG pela nova logo com imagem -->
             <div class="logo">
-                <img src="img/Captura de tela 2025-11-01 014319.png" alt="Logo Sistema de Locações" class="logo-image">
+                <img src="public/logo.png" alt="Logo Sistema de Locações" class="logo-image">
                 <span class="logo-text">Sistema de Locações</span>
             </div>
             <div class="nav-links">
@@ -19,7 +19,8 @@
                 <a href="financeiro.html" class="nav-link">FINANCEIRO</a>
                 <a href="equipamentos.html" class="nav-link active">EQUIPAMENTOS</a>
             </div>
-            <button class="notification-btn">
+            <!-- Adicionando onclick para abrir notificações -->
+            <button class="notification-btn" onclick="toggleNotifications()">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
                     <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
@@ -27,6 +28,17 @@
             </button>
         </div>
     </nav>
+
+    <!-- Adicionando painel de notificações -->
+    <div class="notifications-panel" id="notificationsPanel">
+        <h3>NOVAS NOTIFICAÇÕES</h3>
+        <div class="notification-item">
+            <p>Equipamento Monitor DX2020 precisa de manutenção</p>
+        </div>
+        <div class="notification-item">
+            <p>Certificado do Carrinho Emergência vence em 5 dias</p>
+        </div>
+    </div>
 
     <main class="container">
         <div class="page-header">
@@ -60,6 +72,8 @@
                     <tr>
                         <th>ID</th>
                         <th>Patrimônio</th>
+                        <!-- Adicionando coluna Número de Série -->
+                        <th>Número de Série</th>
                         <th>Equipamento</th>
                         <th>Status</th>
                         <th>Data Vencimento</th>
@@ -71,6 +85,7 @@
                     <tr>
                         <td>01</td>
                         <td>MM2040MM</td>
+                        <td>SN-2040-001</td>
                         <td>Monitor DX2020</td>
                         <td><span class="status-badge status-disponivel">Disponível</span></td>
                         <td>00/00/0000</td>
@@ -80,6 +95,7 @@
                     <tr>
                         <td>02</td>
                         <td>MM2031MM</td>
+                        <td>SN-2031-002</td>
                         <td>Monitor DX2020</td>
                         <td><span class="status-badge status-alocado">Alocado</span></td>
                         <td>00/00/0000</td>
@@ -89,6 +105,7 @@
                     <tr>
                         <td>03</td>
                         <td>EMR2002MM</td>
+                        <td>SN-EMR-003</td>
                         <td>Carrinho Emergência</td>
                         <td><span class="status-badge status-disponivel">Disponível</span></td>
                         <td>00/00/0000</td>
@@ -98,6 +115,7 @@
                     <tr>
                         <td>04</td>
                         <td>EMR2001MM</td>
+                        <td>SN-EMR-004</td>
                         <td>Carrinho Emergência</td>
                         <td><span class="status-badge status-manutencao">Manutenção</span></td>
                         <td>00/00/0000</td>
@@ -107,6 +125,7 @@
                     <tr>
                         <td>05</td>
                         <td>SUP2001MM</td>
+                        <td>SN-SUP-005</td>
                         <td>Suporte de Soro</td>
                         <td><span class="status-badge status-disponivel">Disponível</span></td>
                         <td>00/00/0000</td>
@@ -116,6 +135,7 @@
                     <tr>
                         <td>06</td>
                         <td>SUP2002MM</td>
+                        <td>SN-SUP-006</td>
                         <td>Suporte de Soro</td>
                         <td><span class="status-badge status-alocado">Alocado</span></td>
                         <td>00/00/0000</td>
@@ -125,6 +145,7 @@
                     <tr>
                         <td>07</td>
                         <td>SUP2003MM</td>
+                        <td>SN-SUP-007</td>
                         <td>Suporte de Soro</td>
                         <td><span class="status-badge status-disponivel">Disponível</span></td>
                         <td>00/00/0000</td>
@@ -134,6 +155,7 @@
                     <tr>
                         <td>08</td>
                         <td>SUP2004MM</td>
+                        <td>SN-SUP-008</td>
                         <td>Suporte de Soro</td>
                         <td><span class="status-badge status-disponivel">Disponível</span></td>
                         <td>00/00/0000</td>
@@ -143,6 +165,7 @@
                     <tr>
                         <td>09</td>
                         <td>SUP2005MM</td>
+                        <td>SN-SUP-009</td>
                         <td>Suporte de Soro</td>
                         <td><span class="status-badge status-manutencao">Manutenção</span></td>
                         <td>00/00/0000</td>
@@ -152,6 +175,7 @@
                     <tr>
                         <td>010</td>
                         <td>SUP2006MM</td>
+                        <td>SN-SUP-010</td>
                         <td>Suporte de Soro</td>
                         <td><span class="status-badge status-disponivel">Disponível</span></td>
                         <td>00/00/0000</td>
@@ -161,6 +185,7 @@
                     <tr>
                         <td>011</td>
                         <td>CAM2001MM</td>
+                        <td>SN-CAM-011</td>
                         <td>Cama Hospitalar</td>
                         <td><span class="status-badge status-alocado">Alocado</span></td>
                         <td>00/00/0000</td>
@@ -170,6 +195,7 @@
                     <tr>
                         <td>012</td>
                         <td>CAR2002MM</td>
+                        <td>SN-CAR-012</td>
                         <td>Desfibrilador Cmos Drake</td>
                         <td><span class="status-badge status-disponivel">Disponível</span></td>
                         <td>00/00/0000</td>
@@ -179,6 +205,7 @@
                     <tr>
                         <td>013</td>
                         <td>N/A</td>
+                        <td>SN-BOT-013</td>
                         <td>Bota Mecânica Barrfap</td>
                         <td><span class="status-badge status-disponivel">Disponível</span></td>
                         <td>00/00/0000</td>
@@ -213,6 +240,13 @@
                         <label>PATRIMÔNIO</label>
                         <input type="text" id="equipmentPatrimony">
                     </div>
+                    <!-- Adicionando campo Número de Série -->
+                    <div class="form-group">
+                        <label>NÚMERO DE SÉRIE</label>
+                        <input type="text" placeholder="SN-XXX-000" id="equipmentSerial">
+                    </div>
+                </div>
+                <div class="form-row">
                     <!-- Adicionando campo de Status no formulário -->
                     <div class="form-group">
                         <label>STATUS</label>
@@ -222,18 +256,16 @@
                             <option value="manutencao">Manutenção</option>
                         </select>
                     </div>
-                </div>
-                <div class="form-row">
                     <div class="form-group">
                         <label>VENCIMENTO</label>
                         <input type="date" id="equipmentExpiry">
                     </div>
+                </div>
+                <div class="form-row">
                     <div class="form-group">
                         <label>CERTIFICADO</label>
                         <input type="text" id="equipmentCertificate">
                     </div>
-                </div>
-                <div class="form-row">
                     <div class="form-group">
                         <label>VALOR</label>
                         <input type="text" placeholder="R$ 0,00" id="equipmentValue">
