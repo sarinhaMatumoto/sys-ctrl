@@ -73,48 +73,89 @@ function drawStatusChart() {
 
 function drawLucroChart() {
   const canvas = document.getElementById("lucroChart")
+  if (!canvas) return
+
   const ctx = canvas.getContext("2d")
 
   // Limpar canvas
   ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-  // Dados de lucro mensal (exemplo)
-  const months = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun"]
-  const values = [4500, 5200, 4800, 6050, 5800, 6500]
+  // Dados das empresas com valores de locação
+  const companies = [
+    { name: "DEZ EMERG.", value: 670 },
+    { name: "ASSOC. HOSP.", value: 5208 },
+    { name: "SANTA CASA", value: 1800 },
+    { name: "ONKO", value: 652 },
+    { name: "RADIOLOGIA", value: 670 },
+    { name: "JOSUÉ LOLLI", value: 1600 },
+    { name: "HOSP. 12 OUT.", value: 900 },
+    { name: "DEZ EMERG. (2)", value: 19020 },
+    { name: "BEATRIZ RIZZO", value: 1200 },
+    { name: "A.L. MARQUES", value: 2500 },
+  ]
 
-  const padding = 40
+  const padding = 60
   const chartWidth = canvas.width - padding * 2
   const chartHeight = canvas.height - padding * 2
-  const maxValue = Math.max(...values)
-  const barWidth = chartWidth / months.length - 20
+  const maxValue = Math.max(...companies.map((c) => c.value))
+  const barWidth = chartWidth / companies.length - 15
 
   // Desenhar barras
-  values.forEach((value, index) => {
-    const barHeight = (value / maxValue) * chartHeight
-    const x = padding + index * (chartWidth / months.length) + 10
+  companies.forEach((company, index) => {
+    const barHeight = (company.value / maxValue) * chartHeight
+    const x = padding + index * (chartWidth / companies.length) + 7
     const y = canvas.height - padding - barHeight
 
-    // Desenhar barra
-    ctx.fillStyle = "#2563eb"
+    // Desenhar barra com gradiente
+    const gradient = ctx.createLinearGradient(x, y, x, y + barHeight)
+    gradient.addColorStop(0, "#3b82f6")
+    gradient.addColorStop(1, "#2563eb")
+    ctx.fillStyle = gradient
     ctx.fillRect(x, y, barWidth, barHeight)
 
     // Desenhar valor acima da barra
     ctx.fillStyle = "#1e293b"
-    ctx.font = "12px Arial"
+    ctx.font = "bold 11px Arial"
     ctx.textAlign = "center"
-    ctx.fillText(`R$ ${value.toLocaleString("pt-BR")}`, x + barWidth / 2, y - 5)
+    ctx.fillText(`R$ ${company.value.toLocaleString("pt-BR")}`, x + barWidth / 2, y - 5)
 
-    // Desenhar mês abaixo da barra
-    ctx.fillText(months[index], x + barWidth / 2, canvas.height - padding + 20)
+    // Desenhar nome da empresa abaixo da barra (rotacionado)
+    ctx.save()
+    ctx.translate(x + barWidth / 2, canvas.height - padding + 15)
+    ctx.rotate(-Math.PI / 4)
+    ctx.font = "10px Arial"
+    ctx.textAlign = "right"
+    ctx.fillStyle = "#475569"
+    ctx.fillText(company.name, 0, 0)
+    ctx.restore()
   })
 
   // Desenhar linha base
   ctx.strokeStyle = "#cbd5e1"
-  ctx.lineWidth = 1
+  ctx.lineWidth = 2
   ctx.beginPath()
   ctx.moveTo(padding, canvas.height - padding)
   ctx.lineTo(canvas.width - padding, canvas.height - padding)
   ctx.stroke()
+
+  // Desenhar linhas de grade horizontais
+  const gridLines = 5
+  for (let i = 0; i <= gridLines; i++) {
+    const y = canvas.height - padding - (chartHeight / gridLines) * i
+    ctx.strokeStyle = "#e2e8f0"
+    ctx.lineWidth = 1
+    ctx.beginPath()
+    ctx.moveTo(padding, y)
+    ctx.lineTo(canvas.width - padding, y)
+    ctx.stroke()
+
+    // Desenhar valores no eixo Y
+    const value = (maxValue / gridLines) * i
+    ctx.fillStyle = "#64748b"
+    ctx.font = "10px Arial"
+    ctx.textAlign = "right"
+    ctx.fillText(`R$ ${Math.round(value).toLocaleString("pt-BR")}`, padding - 10, y + 4)
+  }
 }
 
 function showChart(type) {
@@ -133,6 +174,30 @@ function showChart(type) {
     lucroContainer.style.display = "flex"
     statusBtn.classList.remove("active")
     lucroBtn.classList.add("active")
+  }
+}
+
+function toggleLucroTable(type) {
+  const section = document.getElementById("lucroTablesSection")
+  const brutoTable = document.getElementById("lucroBrutoTable")
+  const liquidoTable = document.getElementById("lucroLiquidoTable")
+
+  if (!section) return
+
+  // Se a seção está oculta, mostra ela
+  if (section.style.display === "none") {
+    section.style.display = "block"
+  }
+
+  // Mostra ambas as tabelas lado a lado
+  brutoTable.style.display = "block"
+  liquidoTable.style.display = "block"
+
+  // Se clicar no mesmo card novamente, esconde as tabelas
+  const isVisible = section.style.display === "block"
+  if (isVisible) {
+    // Scroll suave até as tabelas
+    section.scrollIntoView({ behavior: "smooth", block: "nearest" })
   }
 }
 
@@ -177,18 +242,69 @@ function filterTable() {
 }
 
 // Company selection
-function selectCompany(id) {
+function selectCompany(event) {
   const items = document.querySelectorAll(".company-item")
-  items.forEach((item) => item.classList.remove("active"))
+  items.forEach((item) => {
+    item.classList.remove("active")
+    const deleteBtn = item.querySelector(".btn-delete")
+    if (deleteBtn) {
+      deleteBtn.style.display = "none"
+    }
+  })
+
   event.currentTarget.classList.add("active")
+  const deleteBtn = event.currentTarget.querySelector(".btn-delete")
+  if (deleteBtn) {
+    deleteBtn.style.display = "inline"
+  }
+
+  const companyItem = event.currentTarget
+
+  // Atualizar detalhes da empresa
+  document.getElementById("detailName").textContent = companyItem.getAttribute("data-name")
+  document.getElementById("detailAddress").textContent = companyItem.getAttribute("data-address")
+  document.getElementById("detailContact").textContent = companyItem.getAttribute("data-contact")
+  document.getElementById("detailPhone").textContent = companyItem.getAttribute("data-phone")
+  document.getElementById("detailEmail").textContent = companyItem.getAttribute("data-email")
+  document.getElementById("detailContract").textContent = companyItem.getAttribute("data-contract")
+
+  // Atualizar itens alocados
+  const itemsList = document.getElementById("itemsList")
+  const itemsData = JSON.parse(companyItem.getAttribute("data-items") || "[]")
+
+  itemsList.innerHTML = ""
+  let total = 0
+
+  itemsData.forEach((item) => {
+    const itemRow = document.createElement("div")
+    itemRow.className = "item-row"
+
+    const itemName = document.createElement("span")
+    itemName.textContent = item.name
+
+    const itemValue = document.createElement("span")
+    itemValue.className = "item-value"
+    const value = Number.parseFloat(item.value)
+    itemValue.textContent = `R$ ${value.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+
+    itemRow.appendChild(itemName)
+    itemRow.appendChild(itemValue)
+    itemsList.appendChild(itemRow)
+
+    total += value
+  })
+
+  // Atualizar valor total
+  document.getElementById("totalValue").textContent =
+    `R$ ${total.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
 }
 
 // Delete company
-function deleteCompany(id) {
+function deleteCompany(event) {
   event.stopPropagation()
-  if (confirm("Tem certeza que deseja excluir esta empresa?")) {
+  if (confirm("Tem certeza que deseja deletar esta locação?")) {
     event.currentTarget.closest(".company-item").remove()
-    alert("Empresa excluída com sucesso!")
+    alert("Locação deletada com sucesso!")
   }
 }
 
@@ -263,13 +379,14 @@ function saveEquipment() {
   const name = document.getElementById("equipmentName").value
   const id = document.getElementById("equipmentId").value
   const patrimony = document.getElementById("equipmentPatrimony").value
+  const serial = document.getElementById("equipmentSerial").value
   const status = document.getElementById("equipmentStatus").value
   const expiry = document.getElementById("equipmentExpiry").value
   const certificate = document.getElementById("equipmentCertificate").value
   const value = document.getElementById("equipmentValue").value
 
   // Validar campos obrigatórios
-  if (!name || !id || !patrimony || !value) {
+  if (!name || !id || !patrimony || !serial || !value) {
     alert("Por favor, preencha todos os campos obrigatórios!")
     return
   }
@@ -291,10 +408,11 @@ function saveEquipment() {
   // Adicionar nova linha na tabela
   const tbody = document.getElementById("equipmentsTableBody")
   if (tbody) {
-    const newRow = tbody.insertRow(0) // Adiciona no início da tabela
+    const newRow = tbody.insertRow(0)
     newRow.innerHTML = `
       <td>${id}</td>
       <td>${patrimony}</td>
+      <td>${serial}</td>
       <td>${name}</td>
       <td><span class="status-badge ${statusClass}">${statusText}</span></td>
       <td>${formattedExpiry}</td>
@@ -354,7 +472,6 @@ if (companySearch) {
 }
 
 function sendRental() {
-  // Verificar se há equipamentos selecionados (futura implementação com checkboxes)
   alert(
     "Funcionalidade de envio de locação será implementada. Selecione os equipamentos desejados e a empresa destinatária.",
   )
