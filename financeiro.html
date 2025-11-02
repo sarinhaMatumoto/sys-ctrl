@@ -9,17 +9,16 @@
 <body>
     <nav class="navbar">
         <div class="nav-container">
-            <!-- Substituindo logo SVG pela nova logo com imagem -->
             <div class="logo">
-                <img src="img/Captura de tela 2025-11-01 014319.png" alt="Logo Sistema de Locações" class="logo-image">
-                <span class="logo-text">Sistema de Locações</span>
+                <img src="logo.jpg" alt="Logo Sistema de Locações" class="logo-image">
             </div>
             <div class="nav-links">
-                <a href="index.html" class="nav-link">LOCAÇÕES</a>
+                <a href="locacoes.html" class="nav-link">LOCAÇÕES</a>
                 <a href="financeiro.html" class="nav-link active">FINANCEIRO</a>
                 <a href="equipamentos.html" class="nav-link">EQUIPAMENTOS</a>
             </div>
-            <button class="notification-btn">
+            <!-- Adicionando onclick para chamar toggleNotifications() -->
+            <button class="notification-btn" onclick="toggleNotifications()">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
                     <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
@@ -28,93 +27,282 @@
         </div>
     </nav>
 
+    <div class="notifications-panel" id="notificationsPanel">
+        <h3>NOVAS NOTIFICAÇÕES</h3>
+        <div class="notification-item">
+            <p>Falta 1 dia para o vencimento da locação ONKO</p>
+        </div>
+        <div class="notification-item">
+            <p>Falta 2 dias para o vencimento da locação DEZ EMERGÊNCIAS (2)</p>
+        </div>
+    </div>
+
     <main class="container">
-        <h1>Relatório Financeiro</h1>
+        <div class="dashboard-header">
+            <h1>Dashboard Financeiro</h1>
+        </div>
 
-        <div class="financial-grid">
-            <div class="financial-section">
-                <h2>Lucro bruto</h2>
-                <div class="financial-table">
-                    <div class="financial-row">
-                        <span class="company-name">EMPRESA</span>
-                        <span class="company-value">LUCRO</span>
+        <!-- Tornando os cards clicáveis para mostrar tabelas -->
+        <div class="stats-grid">
+            <div class="stat-card" onclick="toggleLucroTable('bruto')" style="cursor: pointer;">
+                <h3>Lucro bruto</h3>
+                <p class="stat-value">R$ 34.220,00</p>
+            </div>
+            <div class="stat-card" onclick="toggleLucroTable('liquido')" style="cursor: pointer;">
+                <h3>Lucro líquido</h3>
+                <p class="stat-value">R$ 28.700,00</p>
+            </div>
+        </div>
+
+        <!-- Adicionando seção de tabelas de lucro que aparecem ao clicar nos cards -->
+        <div id="lucroTablesSection" style="display: none; margin-bottom: 2rem;">
+            <div class="financial-grid">
+                <div class="financial-section" id="lucroBrutoTable">
+                    <h2>Lucro bruto</h2>
+                    <div class="financial-table">
+                        <div class="financial-row">
+                            <span class="company-name">EMPRESA</span>
+                            <span class="company-value">LUCRO</span>
+                        </div>
+                        <div class="financial-row">
+                            <span>DEZ EMERGÊNCIAS</span>
+                            <span>R$ 670,00</span>
+                        </div>
+                        <div class="financial-row">
+                            <span>ASSOCIAÇÃO HOSPITAL CASA DE SAÚDE DE SANTOS</span>
+                            <span>R$ 5.208,00</span>
+                        </div>
+                        <div class="financial-row">
+                            <span>SANTA CASA VALINHOS</span>
+                            <span>R$ 1.800,00</span>
+                        </div>
+                        <div class="financial-row">
+                            <span>ONKO</span>
+                            <span>R$ 652,00</span>
+                        </div>
+                        <div class="financial-row">
+                            <span>RADIOLOGIA ESPECIALIZADA</span>
+                            <span>R$ 670,00</span>
+                        </div>
+                        <div class="financial-row">
+                            <span>JOSUÉ LOLLI JUNIOR</span>
+                            <span>R$ 1.600,00</span>
+                        </div>
+                        <div class="financial-row">
+                            <span>DEZ EMERGÊNCIAS</span>
+                            <span>R$ 900,00</span>
+                        </div>
+                        <div class="financial-row">
+                            <span>HOSPITAL 12 DE OUTUBRO</span>
+                            <span>R$ 19.020,00</span>
+                        </div>
+                        <div class="financial-row">
+                            <span>BEATRIZ MICHELINI RIZZO</span>
+                            <span>R$ 1.200,00</span>
+                        </div>
+                        <div class="financial-row">
+                            <span>A.L. DA G. MARQUES TREINAMENTOS E PALESTRAS</span>
+                            <span>R$ 2.500,00</span>
+                        </div>
                     </div>
-                    <div class="financial-row">
-                        <span>DEZ EMERGÊNCIAS</span>
-                        <span>R$ 670,00</span>
-                    </div>
-                    <div class="financial-row">
-                        <span>ASSOCIAÇÃO HOSPITAL CASA DE SAÚDE DE SANTOS</span>
-                        <span>R$ 5.208,00</span>
-                    </div>
-                    <div class="financial-row">
-                        <span>SANTA CASA VALINHOS</span>
-                        <span>R$ 1.800,00</span>
-                    </div>
-                    <div class="financial-row">
-                        <span>ONKO</span>
-                        <span>R$ 652,00</span>
-                    </div>
-                    <div class="financial-row">
-                        <span>RADIOLOGIA ESPECIALIZADA</span>
-                        <span>R$ 670,00</span>
-                    </div>
-                    <div class="financial-row">
-                        <span>JOSUÉ LOLLI JUNIOR</span>
-                        <span>R$ 1.600,00</span>
-                    </div>
-                    <div class="financial-row">
-                        <span>DEZ EMERGÊNCIAS</span>
-                        <span>R$ 900,00</span>
-                    </div>
-                    <div class="financial-row">
-                        <span>HOSPITAL 12 DE OUTUBRO</span>
-                        <span>R$ 19.020,00</span>
+                </div>
+
+                <div class="financial-section" id="lucroLiquidoTable">
+                    <h2>Lucro líquido</h2>
+                    <div class="financial-table">
+                        <div class="financial-row">
+                            <span class="company-name">EMPRESA</span>
+                            <span class="company-value">LUCRO</span>
+                        </div>
+                        <div class="financial-row">
+                            <span>DEZ EMERGÊNCIAS</span>
+                            <span>R$ 570,00</span>
+                        </div>
+                        <div class="financial-row">
+                            <span>ASSOCIAÇÃO HOSPITAL CASA DE SAÚDE DE SANTOS</span>
+                            <span>R$ 4.500,00</span>
+                        </div>
+                        <div class="financial-row">
+                            <span>SANTA CASA VALINHOS</span>
+                            <span>R$ 1.500,00</span>
+                        </div>
+                        <div class="financial-row">
+                            <span>ONKO</span>
+                            <span>R$ 550,00</span>
+                        </div>
+                        <div class="financial-row">
+                            <span>RADIOLOGIA ESPECIALIZADA</span>
+                            <span>R$ 570,00</span>
+                        </div>
+                        <div class="financial-row">
+                            <span>JOSUÉ LOLLI JUNIOR</span>
+                            <span>R$ 1.400,00</span>
+                        </div>
+                        <div class="financial-row">
+                            <span>DEZ EMERGÊNCIAS</span>
+                            <span>R$ 800,00</span>
+                        </div>
+                        <div class="financial-row">
+                            <span>HOSPITAL 12 DE OUTUBRO</span>
+                            <span>R$ 16.200,00</span>
+                        </div>
+                        <div class="financial-row">
+                            <span>BEATRIZ MICHELINI RIZZO</span>
+                            <span>R$ 1.000,00</span>
+                        </div>
+                        <div class="financial-row">
+                            <span>A.L. DA G. MARQUES TREINAMENTOS E PALESTRAS</span>
+                            <span>R$ 2.100,00</span>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="financial-section">
-                <h2>Lucro líquido</h2>
-                <div class="financial-table">
-                    <div class="financial-row">
-                        <span class="company-name">EMPRESA</span>
-                        <span class="company-value">LUCRO</span>
+        <div class="chart-section">
+            <div class="chart-header">
+                <div class="chart-controls">
+                    <button class="chart-btn active" id="statusChartBtn" onclick="showChart('status')">STATUS</button>
+                    <button class="chart-btn" id="lucroChartBtn" onclick="showChart('lucro')">LUCRO MENSAL</button>
+                </div>
+            </div>
+            <div class="chart-container" id="statusChartContainer">
+                <div class="chart-wrapper">
+                    <canvas id="statusChart" width="300" height="300"></canvas>
+                </div>
+                <div class="chart-legend">
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #2563eb;"></span>
+                        <span>PAGO</span>
                     </div>
-                    <div class="financial-row">
-                        <span>DEZ EMERGÊNCIAS</span>
-                        <span>R$ 670,00</span>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #3b82f6;"></span>
+                        <span>EM ATRASO</span>
                     </div>
-                    <div class="financial-row">
-                        <span>ASSOCIAÇÃO HOSPITAL CASA DE SAÚDE DE SANTOS</span>
-                        <span>R$ 5.208,00</span>
-                    </div>
-                    <div class="financial-row">
-                        <span>SANTA CASA VALINHOS</span>
-                        <span>R$ 1.800,00</span>
-                    </div>
-                    <div class="financial-row">
-                        <span>ONKO</span>
-                        <span>R$ 652,00</span>
-                    </div>
-                    <div class="financial-row">
-                        <span>RADIOLOGIA ESPECIALIZADA</span>
-                        <span>R$ 670,00</span>
-                    </div>
-                    <div class="financial-row">
-                        <span>JOSUÉ LOLLI JUNIOR</span>
-                        <span>R$ 1.600,00</span>
-                    </div>
-                    <div class="financial-row">
-                        <span>DEZ EMERGÊNCIAS</span>
-                        <span>R$ 900,00</span>
-                    </div>
-                    <div class="financial-row">
-                        <span>HOSPITAL 12 DE OUTUBRO</span>
-                        <span>R$ 19.020,00</span>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #60a5fa;"></span>
+                        <span>PENDENTE</span>
                     </div>
                 </div>
             </div>
+            <div class="chart-container" id="lucroChartContainer" style="display: none;">
+                <div class="chart-wrapper">
+                    <canvas id="lucroChart" width="700" height="350"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="filters-section">
+            <input type="text" placeholder="Pesquisar empresa" class="filter-input" id="searchInput">
+            <select class="filter-select" id="statusFilter">
+                <option value="">Todos</option>
+                <option value="pago">Pago</option>
+                <option value="em-atraso">Em atraso</option>
+                <option value="pendente">Pendente</option>
+            </select>
+            <select class="filter-select" id="periodFilter">
+                <option value="">Selecione período</option>
+                <option value="mes">Este mês</option>
+                <option value="trimestre">Este trimestre</option>
+                <option value="ano">Este ano</option>
+            </select>
+        </div>
+
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Empresa</th>
+                        <th>ID Locação</th>
+                        <th>Valor</th>
+                        <th>Vencimento</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="rentalsTableBody">
+                    <tr>
+                        <td>DEZ EMERGÊNCIAS</td>
+                        <td>1</td>
+                        <td>R$ 670,00</td>
+                        <td>01</td>
+                        <td><span class="status-badge status-em-atraso">Em atraso</span></td>
+                        <td><button class="action-btn">Enviar um lembrete</button></td>
+                    </tr>
+                    <tr>
+                        <td>ASSOCIAÇÃO HOSPITAL CASA DE SAÚDE DE SANTOS</td>
+                        <td>2</td>
+                        <td>R$ 5.208,00</td>
+                        <td>08</td>
+                        <td><span class="status-badge status-pago">Pago</span></td>
+                        <td><button class="action-btn-secondary">Nenhuma ação</button></td>
+                    </tr>
+                    <tr>
+                        <td>SANTA CASA VALINHOS</td>
+                        <td>3</td>
+                        <td>R$ 1.800,00</td>
+                        <td>09</td>
+                        <td><span class="status-badge status-pago">Pago</span></td>
+                        <td><button class="action-btn-secondary">Nenhuma ação</button></td>
+                    </tr>
+                    <tr>
+                        <td>ONKO</td>
+                        <td>4</td>
+                        <td>R$ 652,00</td>
+                        <td>15</td>
+                        <td><span class="status-badge status-pendente">Pendente</span></td>
+                        <td><button class="action-btn-warning">Aguardar pagamento</button></td>
+                    </tr>
+                    <tr>
+                        <td>RADIOLOGIA ESPECIALIZADA</td>
+                        <td>5</td>
+                        <td>R$ 670,00</td>
+                        <td>FINALIZADA</td>
+                        <td><span class="status-badge status-pago">Pago</span></td>
+                        <td><button class="action-btn">Enviar um lembrete</button></td>
+                    </tr>
+                    <tr>
+                        <td>JOSUÉ LOLLI JUNIOR</td>
+                        <td>6</td>
+                        <td>R$ 1.600,00</td>
+                        <td>11</td>
+                        <td><span class="status-badge status-em-atraso">Em atraso</span></td>
+                        <td><button class="action-btn">Enviar um lembrete</button></td>
+                    </tr>
+                    <tr>
+                        <td>HOSPITAL 12 DE OUTUBRO</td>
+                        <td>7</td>
+                        <td>R$ 900,00</td>
+                        <td>21</td>
+                        <td><span class="status-badge status-pendente">Pendente</span></td>
+                        <td><button class="action-btn-warning">Aguardar pagamento</button></td>
+                    </tr>
+                    <tr>
+                        <td>DEZ EMERGÊNCIAS</td>
+                        <td>8</td>
+                        <td>R$ 19.020,00</td>
+                        <td>22</td>
+                        <td><span class="status-badge status-pago">Pago</span></td>
+                        <td><button class="action-btn-secondary">Nenhuma ação</button></td>
+                    </tr>
+                    <tr>
+                        <td>BEATRIZ MICHELINI RIZZO</td>
+                        <td>9</td>
+                        <td>R$ 1.200,00</td>
+                        <td>25</td>
+                        <td><span class="status-badge status-pago">Pago</span></td>
+                        <td><button class="action-btn-secondary">Nenhuma ação</button></td>
+                    </tr>
+                    <tr>
+                        <td>A.L. DA G. MARQUES TREINAMENTOS E PALESTRAS</td>
+                        <td>10</td>
+                        <td>R$ 2.500,00</td>
+                        <td>28</td>
+                        <td><span class="status-badge status-pendente">Pendente</span></td>
+                        <td><button class="action-btn-warning">Aguardar pagamento</button></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </main>
 
