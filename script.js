@@ -330,7 +330,7 @@ function filterEquipments() {
   Array.from(rows).forEach((row) => {
     const patrimony = row.cells[1].textContent.toLowerCase()
     const equipment = row.cells[2].textContent.toLowerCase()
-    const statusCell = row.cells[3].textContent.toLowerCase()
+    const statusCell = row.cells[4].textContent.toLowerCase()
 
     const normalizeText = (text) => {
       return text
